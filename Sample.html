@@ -1,0 +1,147 @@
+This tutorial will show you how to make "How ___ Are You?" sort of quiz using only HTML and Javascript. It's really simple, you don't need a special web server to run these, the pages will work anywhere. A "points" quiz asks users questions and then scores them to find out how many points they've earned... how strong are you, how dumb are you, that sort of thing. To make a "What type of ___ are you?" quiz, that's another tutorial, it's over here. Here we go... a javascript quiz that's based on points.
+
+Text in blue is stuff you can/should change.
+Part 1: Setting up the page
+If you haven't already, set up your basic HTML page. It should look something like this:
+<HTML>
+<HEAD>
+<TITLE>
+My Quiz
+</TITLE>
+<!--Quiz calculation stuff will go here-->
+
+</HEAD>
+<BODY>
+My Quiz
+<!--Quiz itself will go here-->
+
+</BODY>
+</HTML>
+
+Yay!
+Part 2: Setting up the basic form
+To make an HTML form, you have to use the FORM tags. The code below goes in between your <BODY> and </BODY> tags:
+<form METHOD=POST>
+<!--This is where your questions go-->
+<input TYPE="button" VALUE="Compute Score!" onClick=computeForm(this.form)><br><br>
+</form>
+This will create the outlines of the form and the button at the end of the quiz that people press to get their score.
+Part 3: Making the questions
+Okay, here's a very basic question:
+<b>How many feet have you licked?<br></b>
+<input TYPE="radio" NAME="a" VALUE="0">Zero.<br>
+<input TYPE="radio" NAME="a" VALUE="1">One.<br>
+<input TYPE="radio" NAME="a" VALUE="2">Two.<br>
+<input TYPE="radio" NAME="a" VALUE="3">Three.<br><br>
+The first line is the question itself, with <b> and </b> tags around it to make it bold. They're optional, of course. The rest of it is the form tags to set up Radio buttons... those are little circles that only allow one to be picked at a time. The VALUE="*" numbers can be changed to whatever you want the points to be. The NAME="a" value has to change for every question. It's easiest to just put these in alphabetical order, so for the next question, make them all "b" like this:
+<b>How many anthills have you blowtorched?<br></b>
+<input TYPE="radio" NAME="b" VALUE="1">Zero.<br>
+<input TYPE="radio" NAME="b" VALUE="3">One.<br>
+<input TYPE="radio" NAME="b" VALUE="6">Two.<br>
+<input TYPE="radio" NAME="b" VALUE="9">A lot.<br><br>
+Put all the questions below the <form> tag and above the <input TYPE="button"> line. There you go.
+Part 4: Making the score
+Past this code in between your <HEAD> and </HEAD> tags:
+<script LANGUAGE="JavaScript">
+<!--Hide JavaScript from Java-Impaired Browsers
+function test_it(entry) {
+if (entry.value!=null && entry.value.length!=0) {
+entry.value=""+ eval(entry.value);
+}
+computeForm(entry.form);
+}
+function computeForm(form) {
+var total=0
+
+<!--This is where the question loops go-->
+
+if (total<0){ window.location="http://www.yoursite.com/answer1.shtml" }
+else if (total<25){ window.location="http://www.yoursite.com/answer2.shtml" }
+else if (total<50){ window.location="http://www.yoursite.com/answer3.shtml" }
+else if (total<100){ window.location="http://www.yoursite.com/answer4.shtml" }
+else { window.location="http://www.yoursite.com/answer5.shtml" }
+}
+//-->
+</SCRIPT>
+To keep this whole tutorial simple, I'm not going to explain what anything there is. Just don't break it when you go to change your stuff. The "Total" numbers will send the person to the site you specify if their total is less than the number, so they go from smallest to largest.
+Part 5: The Question Loops
+Okay, for each question you made, you now have to tell the browser how to figure out the score. It's basically going to look at each answer in each question to see if it's checked or not, and if it is it'll add it to your score.
+for (var count=0; count<4; count++)
+{
+if (form.a[count].checked){
+var total=total+parseInt(form.a[count].value);
+}
+}
+
+for (var count=0; count<4; count++)
+{
+if (form.b[count].checked){
+var total=total+parseInt(form.b[count].value);
+}
+}
+
+Again, for each question you'll have to customize the loop. the "form.a" parts (make sure you get both of them!) need to be "form.b", "form.c", etc. The "count<4" has to change depending on how many answer choices you have. This part goes into the header space, where the "<!--This is where the question loops go-->" line is.
+
+I have loops a-z in a format you can just copy/paste from over here
+
+A bit of programming advice: if every question has the same number of options, you can obviously just make one big "for" loop with all the if... then statements in it. I'm keeping them separate here so you can change the counts for the numbers of options, if that makes sense. It's just an efficiency tip, either way works, if you're not a programmer and this paragraph makes no sense to you just move on.
+Part 6: There we go!
+So basically, this is what our whole page looks like:
+<HTML>
+<HEAD>
+<TITLE>
+My Quiz
+</TITLE>
+<script LANGUAGE="JavaScript">
+<!--Hide JavaScript from Java-Impaired Browsers
+function test_it(entry) {
+if (entry.value!=null && entry.value.length!=0) {
+entry.value=""+ eval(entry.value);
+}
+computeForm(entry.form);
+}
+function computeForm(form) {
+var total=0
+
+for (var count=0; count<4; count++)
+{
+if (form.a[count].checked){
+var total=total+parseInt(form.a[count].value);
+}
+}
+
+for (var count=0; count<4; count++)
+{
+if (form.b[count].checked){
+var total=total+parseInt(form.b[count].value);
+}
+}
+if (total<0){ window.location="http://www.yoursite.com/answer1.shtml" }
+else if (total<25){ window.location="http://www.yoursite.com/answer2.shtml" }
+else if (total<50){ window.location="http://www.yoursite.com/answer3.shtml" }
+else if (total<100){ window.location="http://www.yoursite.com/answer4.shtml" }
+else { window.location="http://www.yoursite.com/answer5.shtml" }
+}
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+My Quiz
+<form METHOD=POST>
+<b>How many feet have you licked?<br></b>
+<input TYPE="radio" NAME="a" VALUE="0">Zero.<br>
+<input TYPE="radio" NAME="a" VALUE="1">One.<br>
+<input TYPE="radio" NAME="a" VALUE="2">Two.<br>
+<input TYPE="radio" NAME="a" VALUE="3">Three.<br><br>
+
+<b>How many anthills have you blowtorched?<br></b>
+<input TYPE="radio" NAME="b" VALUE="1">Zero.<br>
+<input TYPE="radio" NAME="b" VALUE="3">One.<br>
+<input TYPE="radio" NAME="b" VALUE="6">Two.<br>
+<input TYPE="radio" NAME="b" VALUE="9">A lot.<br><br>
+<input TYPE="button" VALUE="Compute Score!" onClick=computeForm(this.form)><br><br>
+
+</form>
+</BODY>
+</HTML>
